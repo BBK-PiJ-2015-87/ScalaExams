@@ -42,12 +42,24 @@ object Run extends App{
   }
 
   def topStudents(course: Course, n: Int): Seq[String] = {
-    val stm = studentMeans(course).toSeq.sortBy(_._2).takeRight(n)
-    return stm.map(x => x._1).toSeq
+    studentMeans(course).toList.sortBy(-_._2).map(_._1).takeRight(n)
+  }
+
+  def passingStudents(course: Course): Seq[String] = {
+    studentMeans(course).toList.filter(_._2 >= 3.5f).map(_._1)
+  }
+
+  def histogram(course: Course): Map[Int,Int] = {
+    return Map()
   }
 
   println(studentMeans(course).toSeq.sortBy(_._2).takeRight(3))
   println(topStudents(course, 2))
+  println(studentMeans(course).groupBy{
+    case (a,b) => math.round(b)
+  }.map{
+    case (grade, student) => (grade, student.size)
+  })
 
 
 
